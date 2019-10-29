@@ -1,0 +1,35 @@
+contract Bank{
+    uint exampleInteger = 10; //unsigned int
+    address view owner; //person who performing the tasks aka owner of the money
+    //address view owner; would display the variable's value
+    
+    mapping(address => unit) public userBalances;
+    // mapping dictionary key=>value, pretty much an array where every index has a name
+    
+    constuctor() public{
+        //standard constructor
+        owner = msg.sender;
+    }
+    
+    function viewBalance(address user) public returns (uint){ 
+        //returns the current account value, an int
+        return userBalances[user];
+    }
+    function withdraw(uint amount) public {
+        require(amount <= userBalances[msg.sender]); //what?
+        msg.sender.transfer(amount);
+        userBalances[msg.sender] -= amount;
+    }
+    
+    //functions need to be payable to send money
+    function deposit() public payable{
+        userBalance[msg.sender] += msg.value;
+    }
+    
+    //NOTES:
+    //  coded in solidity
+    //  try not to use loops because they are incredibly inefficient
+    //  uninstantiated variables are defaulted to a value, even in dictionaries, the key value 
+    //  private variables are not private
+    //  if an integer goes beyond its data limit, it will become negative
+}
